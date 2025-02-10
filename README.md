@@ -1,4 +1,4 @@
-# Mihomo-
+# MihomoProxy
 自用策略
 
 图标库 https://github.com/Koolson/Qure/tree/master
