@@ -103,26 +103,29 @@ proxy-providers-anchor:
 
 proxy-providers:
   Provider_1:
-    type: http
-    url: 'https://sub3.feiyue3.buzz/api/v1/client/subscribe?token=fd3154c888e3cbb617c84cf26a18bf28'
-    path: './proxy_providers/Provider_1.yaml'
+    type: http # 必须, provider 类型 http/file
+    url: 'http://127.0.0.1:38324/download/1' # 机场链接
+    path: './proxy_providers/Provider_1.yaml' # 配置保存位置 '.'代表当前目录,'..'代表上级目录
     <<: [ *health_check, *header, *update, *filter_exclude_ad ]
     override: { <<: *override, additional-prefix: 'A [ ', additional-suffix: ' ]' }
+
   Provider_2:
     type: http
-    url: 'https://acl.syyn.pw/api/v1/client/subscribe?token=288ea023fd0cb03878d3a6cec1dffbbd'
+    url: 'http://127.0.0.1:38324/download/2' # 机场链接
     path: './proxy_providers/Provider_2.yaml'
     <<: [ *health_check, *header, *update, *filter_exclude_ad ]
     override: { <<: *override, additional-prefix: 'B [ ', additional-suffix: ' ]' }
+
   Provider_3:
     type: http
-    url: 'https://nn8qozmu.nn8qozmu.top/api/v1/client/subscribe?token=7096a9e9246488b9497ccd09963fc434'
+    url: 'http://127.0.0.1:38324/download/3' # 机场链接
     path: './proxy_providers/Provider_3.yaml'
     <<: [ *health_check, *header, *update, *filter_exclude_ad ]
     override: { <<: *override, additional-prefix: 'C [ ', additional-suffix: ' ]' }
+
   Provider_4:
     type: http
-    url: 'http://127.0.0.1:38324/download/4'
+    url: 'http://127.0.0.1:38324/download/4' # 机场链接
     path: './proxy_providers/Provider_4.yaml'
     <<: [ *health_check, *header, *update, *filter_exclude_ad ]
     override: { <<: *override, additional-prefix: 'D [ ', additional-suffix: ' ]' }
