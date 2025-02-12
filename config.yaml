@@ -360,6 +360,7 @@ rule-providers-anchor:
   rule_domain2: &rule_domain2 { type: http, behavior: domain, format: yaml, proxy: 'Update', interval: 86400 }
   rule_domain3: &rule_domain3 { type: http, behavior: domain, format: text, proxy: 'Update', interval: 86400 }
   rule_ipcidr: &rule_ipcidr { type: http, behavior: ipcidr, format: mrs, proxy: 'Update', interval: 86400 }
+  rule_ipcidr2: &rule_ipcidr2 { type: http, behavior: classical, format: text, proxy: 'Update', interval: 86400 }
   rule_asn: &rule_asn { type: http, behavior: ipcidr, format: mrs, proxy: 'Update', interval: 86400 }
   rule_classical: &rule_classical { type: http, behavior: classical, format: yaml, proxy: 'Update', interval: 86400 }
   rule_classical2: &rule_classical2 { type: http, behavior: classical, format: text, proxy: 'Update', interval: 86400 }
@@ -384,6 +385,7 @@ rule-providers:
   ip_private: { <<: *rule_ipcidr, path: './rule_providers/ipcidr/private', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs' }
   ip_telegram: { <<: *rule_ipcidr, path: './rule_providers/ipcidr/telegram', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs' }
   ip_cn: { <<: *rule_ipcidr, path: './rule_providers/ipcidr/cn', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs' }
+  chinaip: { <<: *rule_ipcidr2, path: './rule_providers/ipcidr2/ChinaIp', url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaIp.list' }
 
   BanAd: { <<: *rule_classical2,  path: './rule_providers/classical2/BanAd', url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list'}
   BanProgramAD: { <<: *rule_classical2,  path: './rule_providers/classical2/BanProgramAD', url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list'}
@@ -432,5 +434,6 @@ rules:
 - 'DOMAIN-SUFFIX,claude.ai,Claude'
 - 'DOMAIN-SUFFIX,anthropic.com,Claude'
 - 'OR,((RULE-SET,site_gfw),(RULE-SET,site_geolocation-!cn)),Proxy'
+- 'RULE-SET,chinaip,Local'
 - 'OR,((RULE-SET,site_cn),(RULE-SET,ip_cn)),Local'
 - 'MATCH,Proxy'
