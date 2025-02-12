@@ -15,4 +15,4 @@
 
        https://github.com/privacy-protection-tools/anti-AD/tree/master
 
-       
+       https://github.com/TG-Twilight/AWAvenue-Ads-Rule
