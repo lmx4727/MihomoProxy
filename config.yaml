@@ -97,7 +97,7 @@ proxies:
 proxy-providers-anchor:
 - health_check: &health_check { health-check: { enable: true, url: 'https://www.google.com/generate_204', expected-status: '204', interval: 180 } }
 - header: &header { header: { User-Agent: [ 'clash.meta/9.99.9', 'ClashMeta/9.99.9', 'clash-verge/9.99.9' ] } }
-- update: &update { proxy: 'Update', interval: 43200 }
+- update: &update { proxy: 'Update', interval: 21600 }
 - filter_exclude_ad: &filter_exclude_ad { exclude-filter: '(?:流量|期|知|告|群|邀|返|循环|官|客|站|址|获|订|机场|下次|版本|备用|已|联系|邮|服务|工单|贩卖|导航|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|作者|(?i:\b(?:USE|USED|TG|TOTAL|EXPIRE|EMAIL|PANEL|CHANNEL|AUTHOR|UPDATE)\b)|\b\d{4}-\d{2}-\d{2}\b|\d+G)' }
 - override: &override { udp: true }
 
@@ -142,11 +142,12 @@ proxy-groups-anchor:
 - filter_kr: &filter_kr { filter: '(?:KR|韩|韩国|首尔|(?i:\b(?:kr|korea|RepublicofKorea|seoul)\b))' }
 - filter_us: &filter_us { filter: '(?:🇺🇸|美|凤凰城|硅谷|洛杉矶|西雅图|芝加哥|(?i:\b(?:us|usa|united\s*states)\b))' }
 - filter_gb: &filter_gb { filter: '(?:🇬🇧|英|伦敦|曼彻斯特|(?i:\b(?:uk|gb|gbr|united\s*kingdom|britain)\b))' }
+- filter_de: &filter_de { filter: '(?:DE|德国|德意志|柏林|慕尼黑|(?i:\b(?:de|ger|germany|berlin|munich)\b))' }
 - filter_lu: &filter_lu { filter: '(?:🇱🇺|卢森堡|(?i:\b(?:lu|lux|luxembourg|bt|pt)\b))' }
-- proxies_default: &proxies_default { expected-status: '204', proxies: [ PASS, Proxy, Local, 香港, 台湾, 日本, 狮城, 英国, 美国 ] }
-- proxies_direct: &proxies_direct { expected-status: '204', proxies: [ Local, Proxy, PASS, 香港, 台湾, 日本, 狮城, 英国, 美国 ] }
-- proxies_proxy: &proxies_proxy { expected-status: '204', proxies: [ Proxy, Local, PASS, 香港, 台湾, 日本, 狮城, 英国, 美国 ] }
-- proxies_out: &proxies_out { expected-status: '204', proxies: [ 香港, 台湾, 日本, 狮城, 英国, 美国 ] }
+- proxies_default: &proxies_default { expected-status: '204', proxies: [ PASS, Proxy, Local, 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ] }
+- proxies_direct: &proxies_direct { expected-status: '204', proxies: [ Local, Proxy, PASS, 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ] }
+- proxies_proxy: &proxies_proxy { expected-status: '204', proxies: [ Proxy, Local, PASS, 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ] }
+- proxies_out: &proxies_out { expected-status: '204', proxies: [ 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ] }
 - ut: &ut { type: url-test, url: 'https://www.google.com/generate_204', expected-status: '204', max-failed-times: 3, tolerance: 20, interval: 180 }
 - lb-rr: &lb-rr { type: load-balance, strategy: round-robin, url: 'https://www.google.com/generate_204', expected-status: '204', max-failed-times: 3, interval: 180 }
 
@@ -157,7 +158,7 @@ proxy-groups:
 - name: 'Proxy'
   type: select
   # 注意：已移除 Fallback，直接列出各策略组
-  proxies: [ Local, 香港, 台湾, 日本, 狮城, 英国, 美国 ]
+  proxies: [ Local, 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ]
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png'
 
 - name: 'Local'
@@ -185,7 +186,8 @@ proxy-groups:
   type: url-test
   use:
     - 'Provider_1'  # 引用 Provider_1 的所有节点
-  interval: 21600
+  interval: 1800
+  tolerance: 50
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png'
 
 - name: 'Chatgpt'
@@ -227,7 +229,7 @@ proxy-groups:
 
 - name: 'VirtLoc'
   type: select
-  proxies: [ Local, Proxy, PASS, 香港, 台湾, 日本, 狮城, 英国, 美国 ]
+  proxies: [ Local, Proxy, PASS, 香港, 台湾, 美国, 英国, 日本, 韩国, 德国, 狮城 ]
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Domestic.png'
 
 - name: 'Message'
@@ -267,6 +269,18 @@ proxy-groups:
   include-all-providers: true
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png'
 
+- name: '美国'
+  type: select
+  <<: [ *ut, *filter_us ]
+  include-all-providers: true
+  icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png'
+
+- name: '英国'
+  type: select
+  <<: [ *ut, *filter_gb ]
+  include-all-providers: true
+  icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png'
+
 - name: '日本'
   type: select
   <<: [ *ut, *filter_jp ]
@@ -279,23 +293,21 @@ proxy-groups:
   include-all-providers: true
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png'
 
+- name: '德国'
+  type: select
+  <<: [ *ut, *filter_de ]
+  include-all-providers: true
+  icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png'
+
 - name: '狮城'
   type: select
   <<: [ *ut, *filter_sg ]
   include-all-providers: true
   icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png'
 
-- name: '英国'
-  type: select
-  <<: [ *ut, *filter_gb ]
-  include-all-providers: true
-  icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png'
 
-- name: '美国'
-  type: select
-  <<: [ *ut, *filter_us ]
-  include-all-providers: true
-  icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png'
+
+
 
 # 以下为物理网卡组合（如有需要）
 - name: '以太网 + WLAN'
@@ -345,9 +357,12 @@ proxy-groups:
 # =============================================================================
 rule-providers-anchor:
   rule_domain: &rule_domain { type: http, behavior: domain, format: mrs, proxy: 'Update', interval: 86400 }
+  rule_domain2: &rule_domain2 { type: http, behavior: domain, format: yaml, proxy: 'Update', interval: 86400 }
+  rule_domain3: &rule_domain3 { type: http, behavior: domain, format: text, proxy: 'Update', interval: 86400 }
   rule_ipcidr: &rule_ipcidr { type: http, behavior: ipcidr, format: mrs, proxy: 'Update', interval: 86400 }
   rule_asn: &rule_asn { type: http, behavior: ipcidr, format: mrs, proxy: 'Update', interval: 86400 }
   rule_classical: &rule_classical { type: http, behavior: classical, format: yaml, proxy: 'Update', interval: 86400 }
+  rule_classical2: &rule_classical2 { type: http, behavior: classical, format: text, proxy: 'Update', interval: 86400 }
 
 rule-providers:
   site_category-ads-all: { <<: *rule_domain, path: './rule_providers/domain/category-ads-all', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs' }
@@ -370,6 +385,12 @@ rule-providers:
   ip_telegram: { <<: *rule_ipcidr, path: './rule_providers/ipcidr/telegram', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs' }
   ip_cn: { <<: *rule_ipcidr, path: './rule_providers/ipcidr/cn', url: 'https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs' }
 
+  BanAd: { <<: *rule_classical2,  path: './rule_providers/classical2/BanAd', url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list'}
+  BanProgramAD: { <<: *rule_classical2,  path: './rule_providers/classical2/BanProgramAD', url: 'https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list'}
+  qiufeng: { <<: *rule_domain2,  path: './rule_providers/domain2/AWAvenue-Ads-Rule-Clash', url: 'https://testingcf.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash.yaml'}
+  antiad: { <<: *rule_domain,  path: './rule_providers/domain/mihomo', url: 'https://anti-ad.net/mihomo.mrs'}
+  dns-blocklists: { <<: *rule_domain3,  path: './rule_providers/domain/light', url: 'https://testingcf.jsdelivr.net/gh/hagezi/dns-blocklists@main/domains/light.txt'}
+
 sub-rules: null
 
 # =============================================================================
@@ -380,6 +401,11 @@ rules:
 - 'OR,((RULE-SET,site_category-httpdns-cn),(DOMAIN-REGEX,(?i)httpdns|httpsdns)),REJECT'
 - 'OR,((RULE-SET,site_private),(RULE-SET,ip_private,no-resolve)),Local'
 - 'RULE-SET,site_category-ads-all,Advert'
+- 'RULE-SET,BanAd,Advert'
+- 'RULE-SET,BanProgramAD,Advert'
+- 'RULE-SET,qiufeng,Advert'
+- 'RULE-SET,antiad,Advert'
+- 'RULE-SET,dns-blocklists,Advert'
 - 'AND,((NETWORK,udp),(DOMAIN-REGEX,(?i)stun|turn)),WebRTC'
 - 'AND,((DST-PORT,5228-5230),(RULE-SET,site_googlefcm)),Message'
 - 'AND,((DOMAIN-KEYWORD,bili),(DOMAIN-REGEX,(?i)pcdn|mcdn)),REJECT'
@@ -389,13 +415,15 @@ rules:
 - 'OR,((RULE-SET,site_category-games@cn),(RULE-SET,site_category-games@cn)),Platform'
 - 'OR,((RULE-SET,site_telegram),(RULE-SET,ip_telegram)),TeleGram'
 - 'RULE-SET,site_youtube,YouTube'
-- 'RULE-SET,site_gemini,Google'
 - 'RULE-SET,site_bilibili,Bilibili'
 - 'PROCESS-NAME-REGEX,(?i)emby|tsukimi,Emby'
+- 'PROCESS-NAME-REGEX,(?i)femor,Emby'
 - 'RULE-SET,site_onedrive,OneDrive'
 - 'DOMAIN-SUFFIX,telegram.org,TeleGram'
 - 'DOMAIN-SUFFIX,t.me,TeleGram'
 - 'DOMAIN-KEYWORD,telegram,TeleGram'
+- 'DOMAIN-KEYWORD,581658.best,Emby'
+- 'DOMAIN-KEYWORD,tanhuatv.site,Emby'
 - 'PROCESS-NAME-REGEX,(?i)fileu|filec,Download'
 - 'DOMAIN-SUFFIX,openai.com,Chatgpt'
 - 'DOMAIN-SUFFIX,chatgpt.com,Chatgpt'
