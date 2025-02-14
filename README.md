@@ -16,3 +16,5 @@
        https://github.com/privacy-protection-tools/anti-AD/tree/master
 
        https://github.com/TG-Twilight/AWAvenue-Ads-Rule
+       
+       https://github.com/blackmatrix7/ios_rule_script
