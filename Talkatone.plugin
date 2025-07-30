@@ -1,7 +1,7 @@
 #!name=Talkatone
 #!desc=Talkatone
 #!author=KarenlL
-#!icon=https://raw.githubusercontent.com/lmx4727/MihomoProxy/refs/heads/main/Talkatone.plugin
+#!icon=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/talkatone.png
 #!select=Talkatone,PROXY,DIRECT,REJECT
 
 [rule]
