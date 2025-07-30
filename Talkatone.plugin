@@ -2,7 +2,7 @@
 #!desc=Talkatone
 #!author=KarenlL
 #!homepage=https://github.com/LOWERTOP/Shadowrocket-First
-#!icon=https://raw.githubusercontent.com/LOWERTOP/Shadowrocket-First/main/icon/talkatone.png
+#!icon=https://raw.githubusercontent.com/lmx4727/MihomoProxy/refs/heads/main/Talkatone.plugin
 #!select=Talkatone,PROXY,DIRECT,REJECT
 
 [rule]
