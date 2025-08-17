@@ -1,1 +1,27 @@
+[Plugin]
+# 插件信息
+name = DeepSeek
+desc = DeepSeek 代理插件，支持分流策略设置
+icon = https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/deepseek.png
+version = 1.0
 
+[Arguments]
+分流策略 = PROXY
+
+[Rule]
+# 以下为该软件的疑似上传地址，直接拒绝
+DOMAIN-SUFFIX,apmplus.volces.com,REJECT
+DOMAIN-SUFFIX,gator.volces.com,REJECT
+DOMAIN-SUFFIX,guh50jw4-ios.mobile-messenger.intercom.com,REJECT
+
+# 以下为该软件可能需代理地址
+DOMAIN-SUFFIX,deepseek.com, $分流策略
+DOMAIN-SUFFIX,fengkongcloud.cn, $分流策略
+DOMAIN-SUFFIX,fengkongcloud.com, $分流策略
+DOMAIN-SUFFIX,portal101.cn, $分流策略
+DOMAIN-SUFFIX,portal101.com, $分流策略
+DOMAIN-SUFFIX,sentry.io, $分流策略
+DOMAIN-SUFFIX,volces.com, $分流策略
+DOMAIN-SUFFIX,intercom.io, $分流策略
+DOMAIN-SUFFIX,intercom.com, $分流策略
+DOMAIN-SUFFIX,intercomcdn.com, $分流策略
